@@ -9,28 +9,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Get client payload
-        id: payload
-        run: echo "${{ github.event.client_payload }}" > payload.json
-
-      - name: Parse JSON
-        id: parse
-        uses: actions/github-script@v3
-        with:
-          script: |
-            const payload = require('./payload.json');
-            return payload;
-
       - name: Update issue title
         uses: actions/github-script@v3
         with:
           script: |
-            const issue_number = "${{ steps.parse.outputs.issue_number }}";
-            const issue_title = "${{ steps.parse.outputs.issue_title }}";
+            const issue_number = context.payload.client_payload.issue_number;
+            const issue_title = context.payload.client_payload.issue_title;
             github.issues.update({
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: issue_number,
               title: `[#${issue_number}] ${issue_title}`
             });
-          github-token: ${{ secrets.AUTO_ISSUE_TITLE_NUMBERING }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}

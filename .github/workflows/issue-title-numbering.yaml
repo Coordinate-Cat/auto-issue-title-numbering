@@ -13,9 +13,9 @@ jobs:
         id: issue_number
         run: echo "::set-output name=number::${{ github.event.issue.number }}"
 
-      - name: Update issue title
+      - name: Dispatch event
         uses: peter-evans/repository-dispatch@v1
         with:
-          token: ${{ secrets.AUTO_ISSUE_TITLE_NUMBERING }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           event-type: issue-title-update
           client-payload: '{"issue_number": "${{ steps.issue_number.outputs.number }}", "issue_title": "${{ github.event.issue.title }}"}'
