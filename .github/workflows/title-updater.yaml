@@ -21,4 +21,4 @@ jobs:
               issue_number: issue_number,
               title: `[#${issue_number}] ${issue_title}`
             });
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          github-token: ${{ secrets.AUTO_ISSUE_TITLE_NUMBERING }}

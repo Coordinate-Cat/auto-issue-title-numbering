@@ -16,6 +16,6 @@ jobs:
       - name: Dispatch event
         uses: peter-evans/repository-dispatch@v1
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.AUTO_ISSUE_TITLE_NUMBERING }}
           event-type: issue-title-update
           client-payload: '{"issue_number": "${{ steps.issue_number.outputs.number }}", "issue_title": "${{ github.event.issue.title }}"}'
