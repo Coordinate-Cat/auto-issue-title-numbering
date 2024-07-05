@@ -1,0 +1,21 @@
+name: Issue Title Numbering
+
+on:
+  issues:
+    types: [opened]
+
+jobs:
+  add-issue-number:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Get issue number
+        id: issue_number
+        run: echo "::set-output name=number::${{ github.event.issue.number }}"
+
+      - name: Update issue title
+        uses: peter-evans/repository-dispatch@v1
+        with:
+          token: ${{ secrets.AUTO_ISSUE_TITLE_NUMBERING }}
+          event-type: issue-title-update
+          client-payload: '{"issue_number": "${{ steps.issue_number.outputs.number }}", "issue_title": "${{ github.event.issue.title }}"}'
